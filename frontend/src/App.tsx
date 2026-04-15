@@ -158,7 +158,7 @@ function App() {
 
               {/* ═══ ORGANIZER CẤP 2 — EventDetailLayout (nested) ═══ */}
               {/* EventDetailLayout = EventDetailSidebar (Back, Báo cáo, Cài đặt, Marketing) + <Outlet/> */}
-              <Route path="events/:eventId" element={<EventDetailLayout />}>
+              <Route path="events/:eventId" element={<OrganizerEventDetailLayout />}>
                 {/* /organizer/events/:eventId → redirect tới summary */}
                 <Route index element={<Navigate to="summary" replace />} />
                 <Route path="summary" element={<EventSummaryPage />} />

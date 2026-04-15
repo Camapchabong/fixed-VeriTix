@@ -1,9 +1,9 @@
-interface Web3ContextType {
-  provider: ethers.BrowserProvider | null;
-  signer: ethers.Signer | null;
-  contract: ethers.Contract | null;
-  address: string | null;
-  isConnected: boolean;
-  connect: () => Promise<string>;
-  disconnect: () => void;
-}
+import React, { createContext } from 'react';
+export const Web3Context = createContext<any>(null);
+export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
+    <Web3Context.Provider value={{ isConnected: true, address: '0x123...' }}>
+      {children}
+    </Web3Context.Provider>
+  );
+};
