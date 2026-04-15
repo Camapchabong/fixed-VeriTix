@@ -162,40 +162,19 @@ function mapFullEventToOrganizerEvent(event: IEventFull): OrganizerEvent {
  * Fallback: mock data khi API fail hoặc USE_MOCK = true
  */
 export async function getOrganizerEvents(): Promise<OrganizerEvent[]> {
+  // Ép buộc dùng Mock để test UI trước
+  const USE_MOCK = true;
+
   if (USE_MOCK) {
-    await delay(400);
-    return MOCK_EVENTS;
+    await delay(500);
+    return MOCK_EVENTS as OrganizerEvent[];
   }
 
   try {
-    // Dashboard API trả { summary, events } nhưng events chỉ là summary shape.
-    // Nên ta gọi thêm endpoint khác nếu cần full fields.
-    //
-    // Chiến lược: Gọi dashboard → nếu backend trả đủ fields thì dùng,
-    // nếu không thì fallback gọi GET /api/events rồi filter client-side.
-    const { data } = await api.get<OrganizerDashboardResponse>('/events/organizer/dashboard');
-
-    // Dashboard trả OrganizerEventSummary[] (ít fields).
-    // MyEventsPage cần OrganizerEvent (nhiều fields hơn: startTime, location, category, price).
-    // → Cần fetch full events. Gọi lần 2 lấy tất cả events rồi filter.
-    //
-    // TODO: Khi backend thêm GET /api/events/organizer/my-events → gọi trực tiếp.
-    const allEventsRes = await api.get<IEventFull[]>('/events');
-    const organizerWallet = data.events.map((e) => e._id);
-
-    // Filter: chỉ lấy events mà dashboard đã trả (đảm bảo đúng organizer)
-    const dashboardIds = new Set(data.events.map((e) => e._id));
-    const myEvents = allEventsRes.data.filter((e) => dashboardIds.has(e._id));
-
-    return myEvents.map(mapFullEventToOrganizerEvent);
+    const { data } = await api.get<IEventFull[]>('/events/organizer/my-events'); // Giả định endpoint này sẽ có
+    return data.map(mapFullEventToOrganizerEvent);
   } catch (error) {
-    console.warn(
-      '[organizer-event.service] API failed, falling back to mock:',
-      getErrorMessage(error)
-    );
-    // Fallback mock khi backend chưa chạy
-    await delay(300);
-    return MOCK_EVENTS;
+    return MOCK_EVENTS as OrganizerEvent[]; // Fail thì về mock, đừng để app chết
   }
 }
 

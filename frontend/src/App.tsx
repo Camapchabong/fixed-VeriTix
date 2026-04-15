@@ -95,7 +95,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // Layouts
 import MainLayout from './layouts/MainLayout';
 import OrganizerLayout from './layouts/OrganizerLayout';
-import EventDetailLayout from './layouts/EventDetailLayout';
+import OrganizerEventDetailLayout from './layouts/OrganizerEventDetailLayout';
 
 // Public pages
 import HomePage from './pages/HomePage';

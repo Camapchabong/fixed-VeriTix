@@ -54,7 +54,7 @@ export interface OrganizerEvent {
   bannerUrl: string;
   startTime: string;
   endTime: string;
-  status: EventStatus;
+  status: 'DRAFT' | 'ACTIVE' | 'ENDED' | 'CANCELLED'; // Khớp với Mock Data
   currentMinted: number;
   maxSupply: number;
   price: string;

@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OrganizerEventCard from '../../components/organizer/OrganizerEventCard';
-import type { OrganizerEvent } from '../../components/organizer/OrganizerEventCard';
+import type { OrganizerEvent } from '../../types/organizer.type'; // Import từ file type chung, không import từ component
 import Pagination from '../../components/common/Pagination';
 import EmptyState from '../../components/common/EmptyState';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
