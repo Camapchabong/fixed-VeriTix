@@ -109,44 +109,61 @@ export default function MyEventsPage() {
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Fetch events
+  // Fetch events an toàn
   useEffect(() => {
+    let isMounted = true; // Tránh lỗi memory leak khi unmount
     setLoading(true);
-    getOrganizerEvents().then((data) => {
-      setEvents(data);
-      setLoading(false);
-    });
+
+    getOrganizerEvents()
+      .then((data) => {
+        if (!isMounted) return;
+        // Đảm bảo data luôn là mảng, phòng trường hợp API trả về null/undefined
+        setEvents(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        if (!isMounted) return;
+        console.error('Lỗi khi tải danh sách sự kiện Organizer:', err);
+        // Tạm thời set mảng rỗng để render ra giao diện Empty State
+        setEvents([]);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  // ── Stats ──
+  // ── Stats (Tính toán an toàn, có fallback) ──
   const stats = useMemo(
     () => ({
-      total: events.length,
-      active: events.filter((e) => e.status === 'ACTIVE').length,
-      sold: events.reduce((a, e) => a + e.currentMinted, 0),
-      supply: events.reduce((a, e) => a + e.maxSupply, 0),
+      total: events?.length || 0,
+      active: (events || []).filter((e) => e?.status === 'ACTIVE').length,
+      sold: (events || []).reduce((a, e) => a + (e?.currentMinted || 0), 0),
+      supply: (events || []).reduce((a, e) => a + (e?.maxSupply || 0), 0),
     }),
     [events]
   );
 
-  // ── Filter ──
+  // ── Filter (An toàn hóa thuộc tính string) ──
   const filtered = useMemo(() => {
-    let list = [...events];
+    let list = [...(events || [])];
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter(
         (e) =>
-          e.name.toLowerCase().includes(q) ||
-          e.location.toLowerCase().includes(q) ||
-          e.category.toLowerCase().includes(q)
+          (e?.name || '').toLowerCase().includes(q) ||
+          (e?.location || '').toLowerCase().includes(q) ||
+          (e?.category || '').toLowerCase().includes(q)
       );
     }
     const now = new Date();
     if (activeFilter === 'upcoming')
-      list = list.filter((e) => new Date(e.startTime) > now && e.status === 'ACTIVE');
+      list = list.filter((e) => new Date(e?.startTime || 0) > now && e?.status === 'ACTIVE');
     if (activeFilter === 'past')
-      list = list.filter((e) => e.status === 'ENDED' || e.status === 'CANCELLED');
-    if (activeFilter === 'draft') list = list.filter((e) => e.status === 'DRAFT');
+      list = list.filter((e) => e?.status === 'ENDED' || e?.status === 'CANCELLED');
+    if (activeFilter === 'draft') list = list.filter((e) => e?.status === 'DRAFT');
     return list;
   }, [events, search, activeFilter]);
 
