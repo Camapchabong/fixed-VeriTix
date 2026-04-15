@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặc Tả Yêu Cầu Dự Án VeriTix</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        #document-content {
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; text-align: center; }
+        h2 { color: #2980b9; margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        h3 { color: #16a085; }
+        ul, ol { margin-bottom: 20px; }
+        li { margin-bottom: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; color: #333; }
+        code { background-color: #f4f4f4; padding: 2px 5px; border-radius: 4px; font-family: Consolas, monospace; color: #c0392b; }
+        
+        /* CSS mới cho phần công nghệ */
+        .tech-stack { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .tech-badge { background-color: #e8f4f8; border: 1px solid #b3e0f2; padding: 5px 10px; border-radius: 15px; font-weight: bold; color: #0077b6; font-size: 14px; }
+        
+        .export-btn {
+            display: block;
+            width: 250px;
+            margin: 20px auto;
+            padding: 15px;
+            text-align: center;
+            background-color: #27ae60;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .export-btn:hover { background-color: #2ecc71; }
+    </style>
+</head>
+<body>
+
+    <button class="export-btn" onclick="exportHTMLToDoc()">📥 Tải tài liệu về file .DOC</button>
+
+    <div id="document-content">
+        <h1>TÀI LIỆU ĐẶC TẢ YÊU CẦU HỆ THỐNG - VERITIX</h1>
+        <p><strong>Mô tả:</strong> Nền tảng bán vé sự kiện minh bạch ứng dụng công nghệ Blockchain (Web3), chống vé giả và kiểm soát đầu cơ (Anti-scalping).</p>
+
+        <h2>1. Ngăn Xếp Công Nghệ (Tech Stack)</h2>
+        <div class="tech-stack">
+            <span class="tech-badge">Frontend: React.js</span>
+            <span class="tech-badge">UI/UX: Tailwind CSS</span>
+            <span class="tech-badge">Backend: Node.js (Express)</span>
+            <span class="tech-badge">Database: MongoDB</span>
+            <span class="tech-badge">Web3 Auth: MetaMask</span>
+            <span class="tech-badge">Smart Contract: Solidity</span>
+        </div>
+
+        <h2>2. Các Tác Nhân (Actors) & Usecase</h2>
+        <p>Hệ thống bao gồm người dùng chung (Customer/Organizer) và Quản trị viên. Bất kỳ Khách hàng nào cũng có thể trở thành Chủ sự kiện khi họ khởi tạo sự kiện thành công.</p>
+        
+        <h3>2.1. Khách Hàng (Customer)</h3>
+        <ul>
+            <li><strong>Xác thực:</strong> Đăng nhập tức thì bằng ví Web3 (MetaMask) kết hợp email (Web2). Không cần mật khẩu phức tạp.</li>
+            <li><strong>Khám phá:</strong> Xem danh sách sự kiện, tìm kiếm, lọc theo thể loại/thời gian.</li>
+            <li><strong>Giao dịch:</strong> Mua vé trực tiếp (Mint NFT) bằng Crypto (hoặc Fiat qua cổng thanh toán chuyển đổi).</li>
+            <li><strong>Quản lý tài sản:</strong> Xem vé đã mua (My Tickets), nhận mã QR (chữ ký số) để check-in.</li>
+            <li><strong>Thị trường thứ cấp (Resell):</strong> Bán lại vé trên nền tảng. Giá bán bị giới hạn bởi Smart Contract (VD: không quá 110% giá gốc) để chống đầu cơ.</li>
+        </ul>
+
+        <h3>2.2. Chủ Sự Kiện (Organizer)</h3>
+        <ul>
+            <li><strong>Tạo sự kiện:</strong> Nhập thông tin sự kiện, tổng số vé (max supply), giá vé, và tỷ lệ bán lại tối đa (max resell %). Dữ liệu này được đẩy lên Smart Contract.</li>
+            <li><strong>Quản lý tài chính:</strong> Khai báo vốn ban đầu (Initial Capital).</li>
+            <li><strong>Dashboard Thống kê:</strong> Xem tiến độ bán vé (Real-time từ Blockchain/DB), doanh thu hiện tại, lợi nhuận (Doanh thu - Vốn).</li>
+            <li><strong>Kiểm soát check-in:</strong> Sử dụng App/Web cấp quyền để quét mã QR của khách hàng, xác thực tính hợp lệ trên Blockchain.</li>
+        </ul>
+
+        <h3>2.3. Quản Trị Viên (Admin)</h3>
+        <ul>
+            <li>Quản lý người dùng, khóa tài khoản vi phạm.</li>
+            <li>Duyệt sự kiện (Tùy chọn: để tránh nội dung phản cảm trước khi cho phép Mint lên Blockchain).</li>
+            <li>Cấu hình phí nền tảng (Platform fee) thu từ các giao dịch bán mới và bán lại.</li>
+        </ul>
+
+        <h2>3. Cấu Trúc Cơ Sở Dữ Liệu (MongoDB)</h2>
+        <p>Sử dụng mô hình <strong>Hybrid Architecture</strong>: Dữ liệu nặng/có thể thay đổi lưu ở MongoDB (Off-chain), dữ liệu cốt lõi về tài sản lưu trên Smart Contract (On-chain).</p>
+        
+        <table>
+            <tr>
+                <th>Collection</th>
+                <th>Cấu trúc dự kiến (Chuẩn CamelCase)</th>
+                <th>Ghi chú</th>
+            </tr>
+            <tr>
+                <td><strong>users</strong></td>
+                <td>
+                    <code>_id</code>: ObjectId<br>
+                    <code>walletAddress</code>: String (Unique, Indexed - Địa chỉ MetaMask)<br>
+                    <code>email</code>: String<br>
+                    <code>name</code>: String<br>
+                    <code>isOrganizer</code>: Boolean (Mặc định: false. Tự động bật thành true khi tạo event)<br>
+                    <code>isAdmin</code>: Boolean (Mặc định: false)<br>
+                    <code>createdAt</code>, <code>updatedAt</code>: Date
+                </td>
+                <td>Thông tin người dùng định danh. Không dùng Enum Role để linh hoạt trong việc cấp quyền Organizer.</td>
+            </tr>
+            <tr>
+                <td><strong>events</strong></td>
+                <td>
+                    <code>_id</code>: ObjectId<br>
+                    <code>blockchainId</code>: Number (ID trả về từ SC)<br>
+                    <code>name</code>, <code>description</code>, <code>location</code>: String<br>
+                    <code>bannerUrl</code>: String<br>
+                    <code>startTime</code>, <code>endTime</code>: Date<br>
+                    <code>organizerWallet</code>: String (Ref Users)<br>
+                    <code>price</code>: String (Wei/ETH)<br>
+                    <code>maxSupply</code>: Number<br>
+                    <code>maxResellPercentage</code>: Number<br>
+                    <code>initialCapital</code>: Number (Vốn, tính bằng USD/VND/ETH)<br>
+                    <code>isOnChain</code>: Boolean<br>
+                    <code>status</code>: Enum ['DRAFT', 'ACTIVE', 'ENDED']
+                </td>
+                <td>Được đồng bộ tự động từ Blockchain Listener. Lưu thêm metadata off-chain.</td>
+            </tr>
+            <tr>
+                <td><strong>tickets</strong></td>
+                <td>
+                    <code>_id</code>: ObjectId<br>
+                    <code>blockchainTicketId</code>: Number (Token ID)<br>
+                    <code>eventId</code>: ObjectId (Ref Events)<br>
+                    <code>ownerWallet</code>: String (Ref Users)<br>
+                    <code>purchasePrice</code>: String<br>
+                    <code>status</code>: Enum ['AVAILABLE', 'SOLD', 'RESELLING', 'USED']
+                </td>
+                <td>Biểu diễn vé. Khi đổi chủ trên On-chain, Listener sẽ cập nhật `ownerWallet`.</td>
+            </tr>
+            <tr>
+                <td><strong>transactions</strong></td>
+                <td>
+                    <code>_id</code>: ObjectId<br>
+                    <code>txHash</code>: String (Unique)<br>
+                    <code>type</code>: Enum ['MINT', 'RESELL', 'CHECKIN']<br>
+                    <code>fromWallet</code>: String<br>
+                    <code>toWallet</code>: String<br>
+                    <code>amount</code>: String<br>
+                    <code>timestamp</code>: Date
+                </td>
+                <td>Lưu lịch sử giao dịch để hiển thị nhanh trên Dashboard.</td>
+            </tr>
+        </table>
+
+        <h2>4. Chiến Lược Tối Ưu Gas & Bảo Mật</h2>
+        
+        <h3>4.1. Tối Ưu Phí Gas (Gas Optimization)</h3>
+        <ul>
+            <li><strong>Lưu trữ Hybrid:</strong> Tuyệt đối không lưu chuỗi String dài (Mô tả, Ảnh) trên Smart Contract. Chỉ lưu `eventId`, `price`, `maxSupply`, `organizer`. Các metadata khác lưu tại MongoDB và tham chiếu bằng `eventId`.</li>
+            <li><strong>Sử dụng ERC-1155 thay vì ERC-721:</strong> Nếu vé không cần tính duy nhất từng ghế (như vé đứng Fanzone), ERC-1155 cho phép "Mint Batch" (Mua nhiều vé cùng lúc) tốn gas rẻ hơn rất nhiều so với ERC-721. Nếu dùng ERC-721, hãy sử dụng chuẩn <strong>ERC721A</strong> của Azuki để tối ưu gas khi mint nhiều vé.</li>
+            <li><strong>Cập nhật trạng thái Batch:</strong> Thay vì rút tiền (withdraw) từng giao dịch, hãy thiết kế hàm rút tiền gom lại một lần (pull over push) cho Chủ sự kiện.</li>
+        </ul>
+
+        <h3>4.2. Vấn Đề Bảo Mật & Chống Đầu Cơ (Security & Anti-Scalping)</h3>
+        <ul>
+            <li><strong>Reentrancy Attack:</strong> Bắt buộc sử dụng <code>ReentrancyGuard</code> (của OpenZeppelin) gắn <code>nonReentrant</code> vào các hàm liên quan đến chuyển tiền (Buy, Resell, Withdraw).</li>
+            <li><strong>Kiểm soát giá bán lại (Smart Contract Cấp):</strong> Hàm <code>resellTicket</code> trong Contract <b>phải</b> có require: <code>require(msg.value <= maxAllowedPrice, "Price exceeds cap")</code>. Điều này loại bỏ hoàn toàn chợ đen vì vé không thể chuyển nhượng với giá cao hơn mức quy định.</li>
+            <li><strong>Chặn Bot (Bot Mitigation):</strong> 
+                <ul>
+                    <li>Giới hạn số vé tối đa mỗi ví được mua (VD: max 4 vé/ví).</li>
+                    <li>Triển khai Captcha ở Frontend trước khi gọi hàm gọi Smart Contract.</li>
+                </ul>
+            </li>
+            <li><strong>Bảo mật Check-in:</strong> Sử dụng cơ chế <i>Mã hóa bất đối xứng</i>. Mã QR hiển thị trên app khách hàng là một chữ ký số (Signature) có chứa thời gian hiện tại (Timestamp). Người soát vé quét mã -> Verify chữ ký bằng Public Key (Địa chỉ ví) của khách -> Tránh việc khách hàng chụp ảnh màn hình mã QR gửi cho người khác.</li>
+        </ul>
+
+        <h2>5. Lộ Trình Xây Dựng (Development Roadmap)</h2>
+        <ol>
+            <li><strong>Giai đoạn 1: Lõi Blockchain (Smart Contract)</strong>
+                <ul>
+                    <li>Viết contract VeriTix bằng Solidity (kế thừa OpenZeppelin).</li>
+                    <li>Thêm logic Anti-scalping và Platform fee.</li>
+                    <li>Deploy lên Testnet (Sepolia) và viết kịch bản test (Hardhat/Chai).</li>
+                </ul>
+            </li>
+            <li><strong>Giai đoạn 2: Lõi Backend & Đồng bộ (Synchronization)</strong>
+                <ul>
+                    <li>Thiết lập Express/MongoDB.</li>
+                    <li>Xây dựng Blockchain Listener (Ethers.js) lắng nghe event <code>EventCreated</code>, <code>TicketBought</code>, <code>TicketResold</code> để đồng bộ vào DB.</li>
+                    <li>Tạo APIs CRUD cho Metadata sự kiện.</li>
+                </ul>
+            </li>
+            <li><strong>Giai đoạn 3: Frontend - Dành cho Organizer & Customer</strong>
+                <ul>
+                    <li>Tích hợp ví (Ethers.js / Wagmi).</li>
+                    <li>UI Tạo sự kiện (Organizer) & UI Danh sách sự kiện (Customer) bằng React và Tailwind CSS.</li>
+                    <li>Chức năng Mua vé trực tiếp từ Smart Contract.</li>
+                </ul>
+            </li>
+            <li><strong>Giai đoạn 4: Tính năng Nâng cao (Resell & Dashboard)</strong>
+                <ul>
+                    <li>Xây dựng chợ thứ cấp (Marketplace) để bán lại vé.</li>
+                    <li>Dashboard biểu đồ doanh thu, tính toán lợi nhuận cho Organizer.</li>
+                    <li>Xây dựng API tạo và xác thực mã QR Check-in.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <p style="text-align: center; font-style: italic; margin-top: 40px;">--- Tài liệu được biên soạn cho dự án VeriTix ---</p>
+    </div>
+
+    <script>
+        function exportHTMLToDoc() {
+            var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Tài liệu Đặc tả VeriTix</title></head><body>";
+            var footer = "</body></html>";
+            
+            // Lấy nội dung của phần tài liệu
+            var html = header + document.getElementById("document-content").innerHTML + footer;
+            
+            // Tạo một Blob để chứa file Word
+            var blob = new Blob(['\ufeff', html], {
+                type: 'application/msword'
+            });
+            
+            // Khởi tạo link tải
+            var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+            
+            var filename = 'Tai_Lieu_Dac_Ta_VeriTix.doc';
+            
+            var downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            
+            if (navigator.msSaveOrOpenBlob) {
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                downloadLink.href = url;
+                downloadLink.download = filename;
+                downloadLink.click();
+            }
+            document.body.removeChild(downloadLink);
+        }
+    </script>
+</body>
+</html>

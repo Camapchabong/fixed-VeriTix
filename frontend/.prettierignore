@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+.vscode
+package-lock.json
+yarn.lock
+package.json
+tsconfig.json   
+readme.md
+tsconfig.app.json
+vite.config.ts
+eslint.config.js

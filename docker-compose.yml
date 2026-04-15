@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Backend Service
+  backend:
+    build: ./backend
+    container_name: veritix_backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    restart: always
+
+  # Frontend Service
+  frontend:
+    build: ./frontend
+    container_name: veritix_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  
+    depends_on:
+      - backend

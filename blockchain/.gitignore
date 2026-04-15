@@ -1,0 +1,33 @@
+# 1. Thư viện & Dependencies (Nặng, không đẩy lên git)
+node_modules/
+
+# 2. Biến môi trường & Bảo mật (Tuyệt đối quan trọng)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 3. Các file hệ thống & Editor (File rác)
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 4. File build & Coverage (Nếu sau này có test/build)
+dist/
+build/
+coverage/
+.nyc_output/
+
+# 5. Khác
+.npm
+*.log
+pids
+*.pid
+*.seed
+*.pid.lock
